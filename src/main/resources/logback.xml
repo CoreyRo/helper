@@ -1,0 +1,19 @@
+<configuration>
+    <!-- Configure the Console appender -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%5level] %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Disable MongoDB loggers because they print really long and annoying messages -->
+    <logger name="io.netty.handler.codec.http.websocketx.WebSocket08FrameDecoder" level="OFF"/>
+    <logger name="io.netty.channel.nio.NioEventLoop" level="OFF"/>
+
+
+    <!-- Enable the Console and Sentry appenders, Console is provided as an example
+ of a non-Sentry logger that is set to a different logging threshold -->
+    <root level="INFO">
+        <appender-ref ref="Console" />
+    </root>
+</configuration>

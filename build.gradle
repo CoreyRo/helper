@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+mainClassName = 'co.vulpin.groovybot.helper.Main'
+
+shadowJar {
+    archiveName = "GroovyBot.$extension"
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation group: 'com.mewna', name: 'catnip', version: '0.14.0'
+    implementation group: 'com.vdurmont', name: 'emoji-java', version: '4.0.0'
+    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+}
