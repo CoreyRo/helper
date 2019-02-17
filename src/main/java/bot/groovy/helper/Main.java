@@ -26,6 +26,7 @@ public class Main {
 
     public static void main(String[] args) {
         var catnipOptions = new CatnipOptions(TOKEN)
+            .chunkMembers(false)
             .cacheWorker(new NoopEntityCache());
 
         var catnip = Catnip.catnip(catnipOptions);
