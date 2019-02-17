@@ -3,7 +3,6 @@ package bot.groovy.helper;
 import com.mewna.catnip.Catnip;
 import com.mewna.catnip.CatnipOptions;
 import com.mewna.catnip.cache.NoopEntityCache;
-import com.mewna.catnip.entity.message.Message;
 import com.mewna.catnip.shard.DiscordEvent;
 
 import java.util.HashMap;
@@ -36,12 +35,17 @@ public class Main {
         catnip.on(DiscordEvent.GUILD_AVAILABLE, g -> {
             if(!g.id().equals(GUILD_ID))
                 return;
-
             catnip.rest().channel().getChannelMessages(REACTIONS_CHANNEL_ID)
-                .forEach(Message::delete);
+                .forEach(m -> {
+                    catnip.rest().channel().deleteMessage(m.channelId(), m.id());
+                });
 
             catnip.rest().channel().sendMessage(REACTIONS_CHANNEL_ID, options.getEmbed())
-                .thenAccept(m -> options.getTriggers().forEach(m::react));
+                .thenAccept(m -> {
+                    for(String trigger : options.getTriggers()) {
+                        catnip.rest().channel().addReaction(m.channelId(), m.id(), trigger);
+                    }
+                });
         });
 
         var lastReactionTimes = new HashMap<String, Map<String, Long>>();
