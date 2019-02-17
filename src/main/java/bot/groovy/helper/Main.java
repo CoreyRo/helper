@@ -1,4 +1,4 @@
-package co.vulpin.groovybot.helper;
+package bot.groovy.helper;
 
 import com.mewna.catnip.Catnip;
 import com.mewna.catnip.CatnipOptions;

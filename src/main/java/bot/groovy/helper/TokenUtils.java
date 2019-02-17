@@ -1,4 +1,4 @@
-package co.vulpin.groovybot.helper;
+package bot.groovy.helper;
 
 import java.util.Arrays;
 import java.util.Base64;

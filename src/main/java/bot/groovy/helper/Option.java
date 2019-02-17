@@ -1,4 +1,4 @@
-package co.vulpin.groovybot.helper;
+package bot.groovy.helper;
 
 import com.mewna.catnip.entity.message.ReactionUpdate;
 
