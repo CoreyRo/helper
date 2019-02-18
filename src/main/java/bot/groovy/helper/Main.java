@@ -16,7 +16,6 @@ public class Main {
     private static final int RATELIMIT = 30_000;
 
     private static final String TOKEN = System.getenv("DISCORD_TOKEN");
-    private static final String USER_ID = TokenUtils.getUserId(TOKEN);
 
     private static final String GUILD_ID = System.getenv("GUILD_ID");
     private static final String REACTIONS_CHANNEL_ID = System.getenv("REACTIONS_CHANNEL_ID");
@@ -56,7 +55,7 @@ public class Main {
             if(!r.emoji().unicode())
                 return;
 
-            if(r.userId().equals(USER_ID))
+            if(r.userId().equals(catnip.clientId()))
                 return;
 
             catnip.rest().channel().deleteUserReaction(r.channelId(), r.messageId(), r.userId(), r.emoji());
