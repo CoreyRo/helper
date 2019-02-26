@@ -119,7 +119,7 @@ public class Main {
             "**None of the above options answer my question**",
             r -> {
                 r.catnip().rest().guild().addGuildMemberRole(r.guildId(), r.userId(), SUPPORT_ROLE_ID);
-                var message = "<@" + r.userId() + ">, please check out <#" + SUPPORT_CHANNEL_ID + "> for further assistance";
+                var message = "<@" + r.userId() + ">, please ask your question in <#" + SUPPORT_CHANNEL_ID + ">";
                 r.catnip().rest().channel().sendMessage(r.channelId(), message)
                     .thenAccept(m -> executor.schedule((Runnable) m::delete, 30, TimeUnit.SECONDS));
             }
