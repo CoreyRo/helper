@@ -6,7 +6,8 @@ WORKDIR /etc/groovy/helper
 COPY ./ ./
 
 # Make gradle wrapper executable
-RUN sudo chmod +x ./gradlew
+USER root
+RUN chmod +x ./gradlew
 
 # Build jar
 RUN ./gradlew build
