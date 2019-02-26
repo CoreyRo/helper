@@ -25,6 +25,12 @@
         "https://groovy.zendesk.com/hc/en-us/articles/360021276892-Locking-the-Bot-to-Specific-Channels"
       ]
     },{
+      "title": "I want to only let a certain role access Groovy",
+      "content": [
+        "Here's a tutorial on creating a DJ role.",
+        "https://groovy.zendesk.com/hc/en-us/articles/360022514152-Creating-a-DJ-Role"
+      ]
+    },{
       "title": "I need help activating my Patreon perks **OR** my Premium suddenly stopped working",
       "content": [
         "Here's a tutorial on activating Patreon perks.",
