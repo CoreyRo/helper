@@ -8,7 +8,6 @@ mainClassName = 'bot.groovy.helper.Main'
 
 shadowJar {
     archiveName = "groovy-helper.$extension"
-    minimize()
 }
 
 repositories {
