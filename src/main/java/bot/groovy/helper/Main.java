@@ -109,7 +109,11 @@ public class Main {
             options.addOption(
                 NUMBERS[i + 1],
                 jsonObject.getString("title"),
-                new PrivateMessageConsumer(content)
+                r -> {
+                    r.catnip().rest().user()
+                        .createDM(r.userId())
+                        .thenCompose(dm -> dm.sendMessage(content));
+                }
             );
         }
 
