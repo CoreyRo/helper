@@ -4,13 +4,29 @@ import com.mewna.catnip.Catnip;
 import com.mewna.catnip.CatnipOptions;
 import com.mewna.catnip.cache.NoopEntityCache;
 import com.mewna.catnip.shard.DiscordEvent;
+import io.vertx.core.json.JsonObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class Main {
+
+    private static final String[] NUMBERS = {
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine"
+    };
 
     // The ratelimit for button presses in milliseconds
     private static final int RATELIMIT = 30_000;
@@ -22,7 +38,7 @@ public class Main {
     private static final String SUPPORT_CHANNEL_ID = System.getenv("SUPPORT_CHANNEL_ID");
     private static final String SUPPORT_ROLE_ID = System.getenv("SUPPORT_ROLE_ID");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         var catnipOptions = new CatnipOptions(TOKEN)
             .chunkMembers(false)
             .cacheWorker(new NoopEntityCache());
@@ -75,47 +91,27 @@ public class Main {
         catnip.connect();
     }
 
-    private static Options createOptions() {
+    private static Options createOptions() throws IOException {
         var options = new Options();
 
-        options.addOption(
-            "one",
-            "I need help adding Groovy to my server",
-            new PrivateMessageConsumer(
-                "[Click here for a tutorial on inviting Groovy]" +
-                "(https://groovy.zendesk.com/hc/en-us/articles/360020979532-Getting-Started)"
-            )
-        );
+        var configStream = Main.class.getClassLoader().getResourceAsStream("options.json");
+        var configString = new String(configStream.readAllBytes());
+        var json = new JsonObject(configString);
 
-        options.addOption(
-            "two",
-            "Groovy's audio sounds laggy/glitchy/weird",
-            new PrivateMessageConsumer(
-                "[Click here for a tutorial on fixing laggy/glitchy/weird audio]" +
-                "(https://groovy.zendesk.com/hc/en-us/articles/360023031772-Laggy-Glitchy-Distorted-Audio)"
-            )
-        );
+        var configOptions = json.getJsonArray("options");
+        for(int i = 0; i < configOptions.size(); i++) {
+            var jsonObject = configOptions.getJsonObject(i);
 
-        options.addOption(
-            "three",
-            "I want to lock the bot to specific text/voice channel",
-            new PrivateMessageConsumer(
-                "[Click here for a tutorial on locking the bot to specific channels]" +
-                "(https://groovy.zendesk.com/hc/en-us/articles/360021276892-Locking-the-Bot-to-Specific-Channels)"
-            )
-        );
+            var content = jsonObject.getJsonArray("content").stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining("\n"));
 
-        options.addOption(
-            "four",
-            "I need help redeeming my Patreon rewards OR my rewards suddenly stopped working",
-            new PrivateMessageConsumer(
-                "To receive your rewards, you need to make sure your Discord account " +
-                "is properly connected to Patreon. " +
-                "[Here is a tutorial on that.](https://support.patreon.com/hc/en-us/articles/212052266-How-do-I-receive-my-Discord-role)\n\n" +
-                "If you have already connected your Discord account to Patreon and it's still not working, " +
-                "try disconnecting and reconnecting it."
-            )
-        );
+            options.addOption(
+                NUMBERS[i + 1],
+                jsonObject.getString("title"),
+                new PrivateMessageConsumer(content)
+            );
+        }
 
         var executor = Executors.newSingleThreadScheduledExecutor();
         options.addOption(
@@ -123,7 +119,7 @@ public class Main {
             "**None of the above options answer my question**",
             r -> {
                 r.catnip().rest().guild().addGuildMemberRole(r.guildId(), r.userId(), SUPPORT_ROLE_ID);
-                var message = "<@" + r.userId() + ">, check out <#" + SUPPORT_CHANNEL_ID + "> for more assistance";
+                var message = "<@" + r.userId() + ">, please check out <#" + SUPPORT_CHANNEL_ID + "> for further assistance";
                 r.catnip().rest().channel().sendMessage(r.channelId(), message)
                     .thenAccept(m -> executor.schedule((Runnable) m::delete, 30, TimeUnit.SECONDS));
             }

@@ -1,0 +1,35 @@
+{
+  "options": [
+    {
+      "title": "I need help adding Groovy to my server",
+      "content": [
+        "Here's a tutorial on inviting Groovy.",
+        "https://groovy.zendesk.com/hc/en-us/articles/360020979532-Getting-Started"
+      ]
+    },{
+      "title": "Groovy isn't responding",
+      "content": [
+        "Here's a tutorial on fixing an unresponsive Groovy.",
+        "https://groovy.zendesk.com/hc/en-us/articles/360024567311-Why-isn-t-Groovy-responding-"
+      ]
+    },{
+      "title": "Groovy's audio sounds laggy/glitchy/weird",
+      "content": [
+        "Here's a tutorial on fixing laggy/glitchy/distorted audio.",
+        "https://groovy.zendesk.com/hc/en-us/articles/360023031772-Laggy-Glitchy-Distorted-Audio"
+      ]
+    },{
+      "title": "I want to lock the bot to specific text/voice channel",
+      "content": [
+        "Here's a tutorial on locking the bot to a specific text/voice channel.",
+        "https://groovy.zendesk.com/hc/en-us/articles/360021276892-Locking-the-Bot-to-Specific-Channels"
+      ]
+    },{
+      "title": "I need help activating my Patreon perks **OR** my Premium suddenly stopped working",
+      "content": [
+        "Here's a tutorial on activating Patreon perks.",
+        "https://groovy.zendesk.com/hc/en-us/articles/360024567031-Activating-Patreon-Perks"
+      ]
+    }
+  ]
+}
