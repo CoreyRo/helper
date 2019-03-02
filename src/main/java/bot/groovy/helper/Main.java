@@ -92,6 +92,8 @@ public class Main {
     }
 
     private static Options createOptions() throws IOException {
+        var executor = Executors.newSingleThreadScheduledExecutor();
+
         var options = new Options();
 
         var configStream = Main.class.getClassLoader().getResourceAsStream("options.json");
@@ -112,12 +114,16 @@ public class Main {
                 r -> {
                     r.catnip().rest().user()
                         .createDM(r.userId())
-                        .thenCompose(dm -> dm.sendMessage(content));
+                        .thenCompose(dm -> dm.sendMessage(content))
+                        .exceptionally(t -> {
+                            r.catnip().rest().channel().sendMessage(r.channelId(), "<@" + r.userId() + "> " + content)
+                                .thenAccept(m -> executor.schedule((Runnable) m::delete, 30, TimeUnit.SECONDS));
+                            return null;
+                        });
                 }
             );
         }
 
-        var executor = Executors.newSingleThreadScheduledExecutor();
         options.addOption(
             "sos",
             "**None of the above options answer my question**",
