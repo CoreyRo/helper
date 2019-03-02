@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.mewna', name: 'catnip', version: 'afee064'
+    implementation group: 'com.mewna', name: 'catnip', version: '0.14.1'
     implementation group: 'com.vdurmont', name: 'emoji-java', version: '4.0.0'
     implementation group: 'org.json', name: 'json', version: '20180813'
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
