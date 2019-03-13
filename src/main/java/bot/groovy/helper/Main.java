@@ -1,5 +1,6 @@
 package bot.groovy.helper;
 
+import bot.groovy.helper.util.MiscUtils;
 import com.mewna.catnip.Catnip;
 import com.mewna.catnip.CatnipOptions;
 import com.mewna.catnip.cache.NoopEntityCache;
@@ -14,19 +15,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class Main {
-
-    private static final String[] NUMBERS = {
-        "zero",
-        "one",
-        "two",
-        "three",
-        "four",
-        "five",
-        "six",
-        "seven",
-        "eight",
-        "nine"
-    };
 
     // The ratelimit for button presses in milliseconds
     private static final int RATELIMIT = 30_000;
@@ -109,7 +97,7 @@ public class Main {
                 .collect(Collectors.joining("\n"));
 
             options.addOption(
-                NUMBERS[i + 1],
+                MiscUtils.getNumberName(i + 1),
                 jsonObject.getString("title"),
                 r -> {
                     r.catnip().rest().user()
