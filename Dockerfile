@@ -7,4 +7,4 @@ RUN ./gradlew build
 
 FROM openjdk:11-jre-slim as RUNNER
 COPY --from=BUILDER ./etc/groovy/helper/build/libs/ .
-ENTRYPOINT java -jar ./groovy-helper.jarI
+ENTRYPOINT java -jar ./groovy-helper.jar
